@@ -1,0 +1,157 @@
+<head>
+    <title>siteace</title>
+</head>
+<body>
+   
+  
+</body>
+<!-- master layout template -->
+<template name="ApplicationLayout">
+    {{> yield "navbar"}}
+    {{> yield "form"}}
+    {{> yield "main"}}
+ 
+</template>
+
+<template name="welcome">
+    <div class="container">
+        <div class="jumbotron">
+            <h1>Welcome to Website Links Share {{username}}!</h1>
+            <a href="/websitelists" class="btn btn-info">ENTER</a>
+        </div>
+    </div>
+</template>
+
+<!-- single detail entry with ability to add comments -->
+<template name="detail">
+    <div class="container">
+        <a href="{{url}}" target="_blank"><h2>{{title}}</h2></a>
+        <a href="/websitelists"><span class="text"> back to websites list</span></a>
+        <p>{{url}}</p>
+        <p>{{description}}</p>
+        {{#each comments}}
+        {{> oneComment}}
+        {{/each}}
+       
+        {{> comment_form}}
+    </div>
+</template>
+
+<template name="oneComment">
+    <div class="media">
+        <div class="media-left">
+            <a href="#">
+                <img class="media-object" src="http://placehold.it/64x64" alt="image place holder">
+            </a>
+        </div>
+        <div class="media-body">
+            <h4 class="media-heading">created by: {{getUser createdBy}}</h4>
+            {{comment}}
+        </div>
+    </div>
+</template>
+
+<template name="comment_form">
+    <div class="container some-padding">
+        <a class="btn btn-default js-toggle-comment-form" href="#"> 
+            <span class="glyphicon glyphicon-comment" aria-hidden="true"></span> Add Comment
+        </a>
+        <div id="comment_form" class="hidden_div">
+            <form class="js-save-comment-form">   
+                               <div class="form-group">
+                    <label for="comment">Comment</label>
+                    <input type="text" class="form-control" id="comment" placeholder="add your comment ...">
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+        </div>
+    </div>
+</template>
+
+<template name="navbar">
+    <!-- navbar  - you will be putting the login functions here -->
+
+    <div class="container">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/">
+                        Site Ace
+                    </a>
+                </div>
+                <div class="container-fluid">
+                    <ul class="nav navbar-nav navbar-btn">
+                        <li>
+                            {{> loginButtons}} 
+                        </li>
+                        <!--<li class="glyphicon glyphicon-search"> Search</li>-->
+
+                    </ul>
+                    <div class="navbar-right">
+                        <div class="some-margins">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                            {{> EasySearch.Input index=websitesIndex}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+</template>
+
+
+<template name="website_form">
+    <div class="container">
+        <a class="btn btn-default js-toggle-website-form" href="#">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        </a>
+        <div id="website_form" class="hidden_div">
+            <form class="js-save-website-form">
+                <div class="form-group">
+                    <label for="url">Site address</label>
+                    <input type="text" class="form-control" id="url" placeholder="http://www.mysite.com">
+                </div>
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" class="form-control" id="title" placeholder="Mysite">
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <input type="text" class="form-control" id="description" placeholder="I found this site really useful for ...">
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+        </div>
+    </div>
+</template>
+<!-- template that displays several website items -->
+<template name="website_list">
+    <div class="container">
+        <ol>
+            {{#EasySearch.Each index=websitesIndex}}
+            {{> website_item}}
+            {{/EasySearch.Each}}
+        </ol>
+
+    </div>
+</template>
+<!-- template that displays individual website entries -->
+<template name="website_item">
+    <li>
+        <a href="{{url}}">{{title}}</a>
+
+        <p>
+            {{description}} <a href="/detail/{{_id}}"><emp>Details</emp></a>
+        </p>
+        <a href="#" class="btn btn-default js-upvote">
+            <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
+        </a>
+        <a href="#" class="btn btn-default js-downvote">
+            <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
+        </a>
+        <!-- you will be putting your up and down vote buttons in here! -->
+        <span class="text"> upVote(s): <strong>{{upVote}}  </strong></span>
+        <span class="text"> downVote(s): <strong>{{downVote}}  </strong></span>
+        <span class="text"> Site Added on: <strong>{{createdOn}}</strong> </span>
+    </li>
+</template>

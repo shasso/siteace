@@ -1,0 +1,13 @@
+/* CSS declarations go here */
+.hidden_div{
+	display:none;
+}
+body {
+    padding-top: 60px;
+}
+.some-padding {
+    padding-top: 10px;
+}
+.some-margins {
+	margin: 10px 10px 0 0;
+}
