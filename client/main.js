@@ -144,7 +144,7 @@ if (Meteor.isClient) {
             console.log("Down voting website with id " + website_id);
 
             // put the code in here to remove a vote from a website!
-            Websites.update({ _id: website_id }, { $inc: { downVote: -1 } }
+            Websites.update({ _id: website_id }, { $inc: { downVote: 1 } }
            );
             return false;// prevent the button from reloading the page
         }
@@ -241,7 +241,7 @@ if (Meteor.isClient) {
 //            Websites.insert({
 //                title: "Coursera",
 //                url: "http://www.coursera.org",
-//                description: "Universal access to the world’s best education.",
+//                description: "Universal access to the worldï¿½s best education.",
 //                createdOn: new Date()
 //            });
 //            Websites.insert({
